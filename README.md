@@ -1,6 +1,6 @@
 # PgExtAssure
 
-**Static pre-admission security assurance for PostgreSQL extensions.**
+**Portable pre-admission security evidence for PostgreSQL extensions.**
 
 PgExtAssure inspects an extension source tree before a platform team allowlists,
 builds, or installs it. It reads PostgreSQL extension metadata and source files,
@@ -14,7 +14,38 @@ It does **not** build, load, install, or execute the extension it scans.
 
 Canonical repository: <https://github.com/borborich/pgextassure>
 
+Product site: <https://pgextassure.shbb.pro/>
+
 The command-line executable and Python module are both named `pgextassure`.
+
+## Start without a meeting
+
+Choose the shortest path for your role:
+
+| You are | Start here | Result |
+| --- | --- | --- |
+| Extension maintainer | [Add the audit-only GitHub Action](#github-action) | A machine-readable report on every selected change |
+| Platform or security reviewer | [Create and verify Evidence Bundle 1.0](#two-minute-quickstart) | Evidence bound to exact source, coverage, and policy inputs |
+| Independent verifier | [Run the public reproduction workflow](docs/external-reproduction.md) | A public pass or failure record from infrastructure you control |
+| Team with a real intake decision | [Request a bounded evaluation](docs/founding-partner-evaluation.md) | A customer-controlled admission evidence workflow and handoff report |
+
+No hosted PgExtAssure account is required. The static scanner does not
+intentionally send source, findings, or telemetry to a PgExtAssure service.
+
+## Public validation snapshot
+
+PgExtAssure alpha.16 has been independently reproduced by multiple external
+software engineers. Three successful public workflow runs are recorded from
+independently controlled forks. The disclosure-safe public corpus index records
+16 pinned projects and 2,114 files processed with alpha.15.
+
+Read the exact run links, scope, and limitations in the
+[Public validation record](docs/public-validation.md). These results demonstrate
+bounded reproducibility—not certification, customer adoption, production
+safety, or endorsement by an operator or employer.
+
+For the problem and evidence-interface rationale, read
+[PostgreSQL extension admission needs portable evidence](docs/extension-admission-evidence.md).
 
 ## The problem
 
@@ -301,7 +332,7 @@ Remediation:
 Example summary:
 
 ```text
-PgExtAssure 0.1.0-alpha.15
+PgExtAssure 0.1.0-alpha.17
 Manifest: sha256:93c7a1aa82da96c290155124b31fcfaa15e369d105cef327c38c17e1b82d8128
 Coverage: sha256:7cd80d20a4cdb7b1b88828e3d769f36a3353e6c955e07b65f717efa0d9c62a51 | Skipped: 0
 Files: 6 | Findings: 0 (critical 0, high 0, medium 0, low 0)
@@ -332,7 +363,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: borborich/pgextassure@v0.1.0-alpha.15
+      - uses: borborich/pgextassure@v0.1.0-alpha.17
         with:
           path: .
           format: sarif
@@ -428,6 +459,29 @@ metadata-only skipped-file inventory. See
 
 See [Rule reference](docs/rules.md) for the implemented checks and input
 coverage.
+
+## Normalize pgspot evidence
+
+PgExtAssure can normalize saved pgspot `0.9.2` single-file output without
+executing pgspot or extension code:
+
+```bash
+pgextassure adapter pgspot sql/extension.sql \
+  --stdout pgspot.stdout \
+  --subject-path sql/extension.sql \
+  --analyzer-version 0.9.2 \
+  --exit-code 1 \
+  --output pgspot.external-analysis.json
+
+pgextassure adapter verify pgspot.external-analysis.json \
+  --source sql/extension.sql \
+  --stdout pgspot.stdout
+```
+
+The strict document binds the exact source and stdout bytes, declared analyzer
+version, saved exit code, counters, and normalized diagnostics. It is
+observational review evidence and does not grant or deny admission. See
+[External analyzer evidence](docs/external-analyzers.md).
 
 ## What the MVP looks for
 
@@ -542,17 +596,18 @@ Dynamic analysis will still be evidence, not certification. Details are in the
 
 ## Public corpus loop
 
-PgExtAssure is designed to create a useful public evidence corpus without making
-source upload the default:
+PgExtAssure maintains a pinned public corpus for reproducibility and scanner
+quality. The disclosure-safe
+[Extension Assurance Index](docs/public-assurance-index.md) publishes analysis
+coverage, provenance, and capability profiles for public revisions while
+omitting findings, severities, rule identifiers, evidence, paths, and source
+excerpts.
 
-1. maintainers run the scanner locally or in CI;
-2. they may opt in to publish a normalized report containing rule IDs,
-   severities, scanner/rule-set versions, extension version, and cryptographic
-   digests—not private source;
-3. accepted fixes link a finding to a remediation diff;
-4. the corpus improves regression fixtures, rule precision, and a versioned
-   compatibility/admission badge;
-5. better rules produce more useful local reports and more contributors.
+A completed index entry means only that the pinned source was processed. It is
+not a security rating, certification, endorsement, vulnerability report, or
+allowlist decision. Project-specific security observations remain behind the
+corpus publication gate until they have been reviewed and, where appropriate,
+coordinated with the upstream maintainer.
 
 No corpus upload or telemetry exists in the static MVP. Any future contribution
 flow must be explicit opt-in, preview the exact payload, and support deletion.
@@ -594,6 +649,12 @@ flow must be explicit opt-in, preview the exact payload, and support deletion.
 - [Helm deployment with mandatory mTLS](docs/helm-deployment.md)
 - [Roadmap](docs/roadmap.md)
 - [Public corpus pilot](benchmarks/public-corpus/README.md)
+- [Independent external reproduction](docs/external-reproduction.md)
+- [Public validation record](docs/public-validation.md)
+- [Why extension admission needs portable evidence](docs/extension-admission-evidence.md)
+- [Founding Partner Evaluation](docs/founding-partner-evaluation.md)
+- [Illustrative readiness report](docs/sample-readiness-report.md)
+- [Public Extension Assurance Index](docs/public-assurance-index.md)
 
 ## Development
 

@@ -6,6 +6,55 @@ and releases use semantic versioning.
 
 ## [Unreleased]
 
+## [0.1.0-alpha.17] - 2026-08-22
+
+### Added
+
+- Public, immutable external-reproduction workflow and disclosure-safe report
+  path for independent verification of the alpha.16 protocol.
+- Public validation record documenting multiple independent successful
+  reproductions without claiming certification, customer adoption, or
+  employer endorsement.
+- Self-service Founding Partner Evaluation, sample readiness report, and
+  extension-admission evidence rationale for asynchronous enterprise
+  evaluation.
+
+### Changed
+
+- GitHub and package metadata now point evaluators to the PgExtAssure product
+  site and documentation.
+- The primary adoption path is a customer-controlled GitHub Action with
+  portable evidence rather than a mandatory introductory meeting.
+
+## [0.1.0-alpha.16] - 2026-08-07
+
+### Added
+
+- Fail-closed pgspot `0.9.2` text adapter with deterministic, digest-bound
+  External Analysis `1.0` documents and independent source/stdout
+  recomputation.
+- Published External Analysis JSON Schema and explicit observational-only
+  trust boundary that leaves admission policy and Evidence Bundle `1.0`
+  unchanged.
+- Separate medium-severity review signals for `SECURITY DEFINER` routines with
+  runtime `search_path` logic or only plainly schema-qualified calls, and for
+  event-trigger callbacks that are not ordinary callable APIs.
+
+### Changed
+
+- High-confidence `SECURITY DEFINER` search-path findings now require an
+  unqualified callable lookup when the declaration has no recognized safe
+  path; ambiguous body-level cases remain visible without asserting an
+  exploit.
+- PUBLIC-execute findings explicitly describe an exposed definer authority
+  boundary without claiming that every such routine is a privilege escalation.
+
+### Fixed
+
+- External-connection findings no longer treat routine names mentioned only by
+  `ALTER` or `DROP` as newly introduced outbound-network capability; routine
+  declarations and real calls remain detectable.
+
 ## [0.1.0-alpha.15] - 2026-07-30
 
 ### Fixed
@@ -217,7 +266,9 @@ and releases use semantic versioning.
 - Gate-preserving broken-pipe handling and stricter `pg_temp` placement for
   recognized safe `SECURITY DEFINER` search paths.
 
-[Unreleased]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.15...HEAD
+[Unreleased]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.17...HEAD
+[0.1.0-alpha.17]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.16...v0.1.0-alpha.17
+[0.1.0-alpha.16]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.15...v0.1.0-alpha.16
 [0.1.0-alpha.15]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.14...v0.1.0-alpha.15
 [0.1.0-alpha.14]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.13...v0.1.0-alpha.14
 [0.1.0-alpha.13]: https://github.com/borborich/pgextassure/compare/v0.1.0-alpha.12...v0.1.0-alpha.13

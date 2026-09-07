@@ -5,7 +5,7 @@ backend-path = ["src/pgextassure"]
 
 [project]
 name = "pgextassure"
-version = "0.1.0a15"
+version = "0.1.0a17"
 description = "Static assurance scanner for PostgreSQL extensions"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -32,7 +32,8 @@ classifiers = [
 postgres = ["psycopg[binary]==3.3.4"]
 
 [project.urls]
-Homepage = "https://github.com/borborich/pgextassure"
+Homepage = "https://pgextassure.shbb.pro/"
+Documentation = "https://github.com/borborich/pgextassure#readme"
 Repository = "https://github.com/borborich/pgextassure"
 "Issue Tracker" = "https://github.com/borborich/pgextassure/issues"
 "Security Policy" = "https://github.com/borborich/pgextassure/security/policy"
